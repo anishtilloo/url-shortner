@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const express = require('express');
 const connectToDb = require('./utils/dbConnect');
+const ShortUrl = require('./models/shortUrl');
 
 const app = express();
 
@@ -12,7 +13,7 @@ app.use(express.urlencoded({ extended: false }))
 const PORT = process.config.env || 5000;
 
 app.get('/', async (req, res) => {
-    const shortUrls = await ShortUrl.find()
+    const shortUrls = await ShortUrl.find();
     res.render('index', { shortUrls: shortUrls })
   })
   
@@ -34,5 +35,5 @@ app.get('/', async (req, res) => {
 
 app.listen(PORT, () => {
     connectToDb(process.env.DB_URL)
-    console.log("The server is running on port 3000");
+    console.log(`The server is running on port ${PORT}`);
 })
