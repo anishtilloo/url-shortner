@@ -1,14 +1,10 @@
+require('dotenv').config();
+
+
 const express = require('express');
-const mongoose = require('mongoose');
-const ShortUrl = require('./models/shortUrl')
+const connectToDb = require('./utils/dbConnect');
 
 const app = express();
-
-mongoose.connect('mongodb://127.0.0.1:27017/urlShortnerDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }))
@@ -37,5 +33,6 @@ app.get('/', async (req, res) => {
   })
 
 app.listen(PORT, () => {
+    connectToDb(process.env.DB_URL)
     console.log("The server is running on port 3000");
 })
